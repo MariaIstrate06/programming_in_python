@@ -1,0 +1,185 @@
+# 1. Find The greatest common divisor of multiple numbers read from the console. #
+def ex_1():
+    # we're creating a list of numbers from the console input
+    list_of_numbers = list(map(int, input().split()))
+
+    # definition of a function that calculated the greatest common divisor between two numbers
+
+    def greatest_common_divisor(a, b):
+        while a != b:
+            if a > b:
+                a = a - b
+            else:
+                b = b - a
+        return a
+
+    # we define the result as the greatest common divisor between the first two numbers, in order for us to calculate
+    # it for every item in the list
+    result = greatest_common_divisor(list_of_numbers[0], list_of_numbers[1])
+
+    # we calculate GCD for every item in the list
+    for i in range(2, len(list_of_numbers)):
+        result = greatest_common_divisor(result, list_of_numbers[i])
+    print(result)
+
+
+# 2. Write a script that calculates how many vowels are in a string.
+def ex_2():
+    # we get a string as an input
+    my_string = input()
+
+    # we use a variable to count all the vowels in a for loop
+    vowel_count = 0
+    for i in my_string:
+        if i in "aeiouAEIOU":
+            vowel_count += 1
+
+    print(vowel_count)
+
+
+# 3. Write a script that receives two strings and prints the number of occurrences of the first string in the second.
+def ex_3():
+    # we get 2 strings from console (we use split so we can read them both at once, being separated by space
+    first_string, second_string = input().split()
+
+    # we initiate a counter and go into a for loop from 0 to the length of the second string. we compare the first
+    # string to every possibility of a substring from the second string
+    count = 0
+    for i in range(0, len(second_string)):
+        if first_string == second_string[i:len(first_string) + i]:
+            count += 1
+
+    print(count)
+
+
+# 4. Write a script that converts a string of characters written in UpperCamelCase into lowercase_with_underscores.
+def ex_4():
+    input_string = input()
+
+    def upper_to_lower(my_string):
+        result = [my_string[0].lower()]
+        for char in my_string[1:]:
+            if char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+                result.append('_')
+                result.append(char.lower())
+            else:
+                result.append(char)
+        return ''.join(result)
+
+    print(upper_to_lower(input_string))
+
+
+# 5. Given a square matrix of characters write a script that prints the string obtained by going through the matrix in
+# spiral order (as in the example):
+# firs      1  2  3  4    =>   first_python_lab
+# n_lt      12 13 14 5
+# oba_      11 16 15 6
+# htyp      10 9  8  7
+def ex_5():
+    # matrix = [['1', '2', '3', '4'], ['12', '13', '14', '5'], ['11', '16', '15', '6'], ['10', '9', '8', '7']]
+    matrix = [['f', 'i', 'r', 's'], ['n', '_', 'l', 't'], ['o', 'b', 'a', '_'], ['h', 't', 'y', 'p']]
+    matrix_rows = 4
+    matrix_columns = 4
+
+    def spiralPrint(m, n, a):
+        k = 0
+        l = 0
+        while k < m and l < n:
+            for i in range(l, n):
+                print(a[k][i], end='')
+            k += 1
+            for i in range(k, m):
+                print(a[i][n - 1], end='')
+            n -= 1
+            if k < m:
+                for i in range(n - 1, (l - 1), -1):
+                    print(a[m - 1][i], end='')
+                m -= 1
+            if l < n:
+                for i in range(m - 1, k - 1, -1):
+                    print(a[i][l], end='')
+                l += 1
+
+    spiralPrint(matrix_rows, matrix_columns, matrix)
+
+
+# 6. Write a function that validates if a number is a palindrome.
+def ex_6():
+    number = input()
+
+    if number == number[::-1]:
+        print('true')
+    else:
+        print('false')
+
+
+# 7. Write a function that extract a number from a text (for example if the text is "An apple is 123 USD", this function
+# will # return 123, or if the text is "abc123abc" the function will extract 123). The function will extract only
+# the first number that is found.
+def ex_7():
+    my_string = input()
+    i = 0
+    found_the_first = 0
+    new_string = []
+    while found_the_first != 2 and i < len(my_string):
+        if found_the_first == 1 and my_string[i] not in "0123456789":
+            found_the_first = 2
+        if my_string[i] in "0123456789":
+            new_string.append(my_string[i])
+            found_the_first = 1
+        i += 1
+    if found_the_first == 0:
+        print('Not Found')
+    else:
+        print(''.join(new_string))
+
+
+# 8.Write a function that counts how many bits with value 1 a number has. For example for number 24,
+# the binary format is 00011000, meaning 2 bits with value "1"
+
+def ex_8():
+    my_string = input()
+
+    number = int(my_string)
+    count = 0
+    while number != 0:
+        if number % 2 == 1:
+            count += 1
+        number = number // 2
+
+    print(count)
+
+
+# 9. Write a functions that determine the most common letter in a string. For example if the string
+# is "an apple is not a tomato", then the most common character is "a" (4 times). Only letters
+# (A-Z or a-z) are to be considered. Casing should not be considered "A" and "a" represent the same character.
+def ex_9():
+    my_string = input()
+
+    freq_list = {}
+    for i in my_string:
+        if i != ' ':
+            if i in freq_list:
+                freq_list[i] += 1
+            else:
+                freq_list[i] = 1
+
+    print(freq_list)
+    maxim = 0
+    for index in freq_list:
+        if freq_list[index] > maxim:
+            maxim = freq_list[index]
+    print(maxim)
+
+
+# 10. Write a function that counts how many words exists in a text. A text is considered to be form out of words that
+# are separated by only ONE space. For example: "I have Python exam" has 4 words.
+def ex_10():
+    my_string = input()
+
+    count = 1
+    for i in range(0, len(my_string)):
+        if my_string[i] == ' ' and my_string[i - 1] != ' ':
+            count += 1
+
+    print(count)
